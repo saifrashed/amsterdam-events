@@ -1,18 +1,28 @@
 <header class="blog-header py-0 my-0">
-    <div class="row flex-nowrap justify-content-between m-0 p-0">
-        <div class="col-3 p-0">
-            <img class="img-fluid" src="assets/img/header-left.jpg"/>
+    <div class="row flex-nowrap justify-content-between m-0 ">
+        <div class="col-3 p-0 d-none d-md-block" style="background: url('assets/img/header-left.jpg'); background-size: cover; background-position:left">
         </div>
-        <div class="col-6 p-0 text-center pt-3">
+
+        <div class="col-xs-12 col-md-6 py-3 text-center">
             <a class="blog-header-logo text-dark logo" href="#">Amsterdam Events</a>
-        </div>
-        <div class="col-3 p-0">
-            <img class="img-fluid" src="assets/img/header-right.jpg"/>
-            <div class="px-4">
-                <span class="float-end subtitle d-none d-md-block">Offered to you by HvA.nl</span>
+
+            <div class="row flex-nowrap justify-content-between m-0">
+                <div class="col-12 p-0">
+                    <div class="px-4">
+                        <span class="float-start subtitle d-none d-md-block">Today is <br> {{currentDate.toLocaleDateString("en-EN", { weekday: 'long' })}}, {{currentDate.getDate()}} {{currentDate.toLocaleDateString("en-EN", { month: 'long' })}} {{currentDate.getFullYear()}}</span>
+                    </div>
+
+                    <div class="px-4">
+                        <span class="float-end subtitle d-none d-md-block">Offered to you by HvA.nl</span>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="col-3 p-0 d-none d-md-block" style="background: url('assets/img/header-right.jpg'); background-size: cover">
+            <!--<img class="img-fluid" src="assets/img/header-right.jpg"/>-->
+        </div>
     </div>
+
 </header>
 
 <hr class="py-0 my-0"/>
