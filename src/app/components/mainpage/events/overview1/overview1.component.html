@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="h6 pt-4 pb-3 mb-4 border-bottom">Overview of all events:</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Event title</th>
+                <th scope="col">Start</th>
+                <th scope="col">End</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Is Ticketed</th>
+                <th scope="col">participationFee</th>
+                <th scope="col">maxParticipants</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let event of aEvents">
+                <td>{{event.title}}</td>
+                <td>{{event.start.toLocaleDateString()}}</td>
+                <td>{{event.end.toLocaleDateString()}}</td>
+                <td>{{event.description}}</td>
+                <td>{{event.status}}</td>
+                <td>{{event.isTicketed}}</td>
+                <td>{{event.participationFee}}</td>
+                <td>{{event.maxParticipants}}</td>
+
+            </tr>
+            <tr>
+                <td colspan="8">
+                    <button type="button" class="btn btn-primary float-end" (click)="addRandomAEvent()">Add Event</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--<div class="col-md-8">-->
+        <!--<aside class="bd-aside sticky-xl-top align-self-start mb-3 mb-xl-5 px-2">-->
+            <!--<h2 class="h6 pt-4 pb-3 mb-4 border-bottom">Detail information:</h2>-->
+            <!--<div class="row">-->
+            <!--</div>-->
+        <!--</aside>-->
+    <!--</div>-->
+</div>
