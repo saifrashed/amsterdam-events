@@ -23,7 +23,7 @@
                 <td>{{event.description}}</td>
                 <td>{{event.status}}</td>
                 <td>{{event.isTicketed}}</td>
-                <td>{{event.participationFee}}</td>
+                <td>{{event.isTicketed ? event.participationFee : "free"}}</td>
                 <td>{{event.maxParticipants}}</td>
 
             </tr>

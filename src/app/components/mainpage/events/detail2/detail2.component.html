@@ -1,0 +1,46 @@
+<div class="row" *ngIf="detailEvent != null; else detailMessage">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col" colspan="2">Selected event details: (id={{detailEvent.title}})</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th class="table-dark">Title</th>
+            <td><input class="w-100" type="text" [(ngModel)]="detailEvent.title"></td>
+        </tr>
+        <tr>
+            <th class="table-dark">Description</th>
+            <td>{{detailEvent.description}}</td>
+        </tr>
+        <tr>
+            <th class="table-dark">Status</th>
+            <td>
+                <select>
+                    <option>{{detailEvent.status}}</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th class="table-dark">Is Ticketed</th>
+            <td>
+                <input type="checkbox" [(ngModel)]="detailEvent.isTicketed">
+            </td>
+        </tr>
+        <tr>
+            <th class="table-dark">Participation fee</th>
+            <td>{{detailEvent.participationFee}}</td>
+        </tr>
+        <tr>
+            <th class="table-dark">Maximum Participation</th>
+            <td>{{detailEvent.maxParticipants}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<ng-template #detailMessage>
+    Select an event at the left
+</ng-template>
