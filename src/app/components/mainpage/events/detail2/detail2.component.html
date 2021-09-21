@@ -2,7 +2,7 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col" colspan="2">Selected event details: (id={{detailEvent.title}})</th>
+            <th scope="col" colspan="2">Selected event details: (id={{detailEvent.id}})</th>
         </tr>
         </thead>
         <tbody>
@@ -36,7 +36,15 @@
             <th class="table-dark">Maximum Participation</th>
             <td>{{detailEvent.maxParticipants}}</td>
         </tr>
+        <tr>
+            <td colspan="2">
+                <button type="button" class="btn btn-danger float-end" (click)="outputEvent.emit(detailEvent.id)">
+                    Delete Event
+                </button>
+            </td>
+        </tr>
         </tbody>
+
     </table>
 </div>
 

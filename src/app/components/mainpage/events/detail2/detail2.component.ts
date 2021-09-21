@@ -8,8 +8,8 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 export class Detail2Component implements OnInit {
 
   @Input() detailEvent: any; // decorate the property with @Input()
-  // @Output() outputEvent:EventEmitter<string>= new EventEmitter();
 
+  @Output() outputEvent:EventEmitter<string>= new EventEmitter();
 
   constructor() { }
 

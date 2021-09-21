@@ -22,9 +22,9 @@
     </div>
 
     <div class="col-md-9">
-        <aside class="bd-aside sticky-xl-top align-self-start mb-3 mb-xl-5 px-2">
+        <aside class=" sticky-xl-top align-self-start mb-3 mb-xl-5 px-2">
             <h2 class="h6 pt-4 pb-3 mb-4 border-bottom">Detail information:</h2>
-            <app-detail-two [detailEvent]="selectedAEvent"></app-detail-two>
+            <app-detail-two [detailEvent]="selectedAEvent" (outputEvent)="deleteAEvent($event)"></app-detail-two>
         </aside>
     </div>
 </div>

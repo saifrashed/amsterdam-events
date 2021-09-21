@@ -27,7 +27,6 @@ export class Overview2Component implements OnInit {
         console.log(this.aEvents)
     }
 
-
     /**
      * Adds a random event
      */
@@ -38,7 +37,6 @@ export class Overview2Component implements OnInit {
         this.selectedAEvent = newEvent;
     }
 
-
     /**
      * Selects an event
      * @param selectedAEvent
@@ -47,6 +45,16 @@ export class Overview2Component implements OnInit {
         console.log(selectedAEvent.title);
 
         this.selectedAEvent = selectedAEvent;
+    }
+
+    /**
+     * To delete event
+     * @param AEventID
+     */
+    deleteAEvent(data: any) {
+        var removeIndex = this.aEvents.map(item => item.id).indexOf(data);
+        this.aEvents.splice(removeIndex, 1);
+        this.selectedAEvent = null;
     }
 
 }

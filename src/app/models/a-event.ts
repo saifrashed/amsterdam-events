@@ -7,6 +7,9 @@ enum AEventStatus {
 }
 
 export class AEvent {
+    static idCounter: number = 20001;
+
+    private _id: number;
     private _title: string;
     private _start: Date;
     private _end: Date;
@@ -16,7 +19,8 @@ export class AEvent {
     private _participationFee: number;
     private _maxParticipants: number;
 
-    constructor(title: string, start: Date, end: Date, description: string, status: AEventStatus, isTicketed: Boolean, participationFee: number, maxParticipants: number) {
+    constructor(id: number, title: string, start: Date, end: Date, description: string, status: AEventStatus, isTicketed: Boolean, participationFee: number, maxParticipants: number) {
+        this._id = id;
         this._title = title;
         this._start = start;
         this._end = end;
@@ -33,6 +37,7 @@ export class AEvent {
         let eventNames = ['Amsterdam\'s Neighbourhood Secrets', 'How to spend Valentine\'s Day in Amsterdam', 'Winter day trips from Amsterdam', 'Canal Cruise Ticket'];
         let statusEnum = [AEventStatus.Draft, AEventStatus.Published, AEventStatus.Canceled];
 
+        let id = this.idCounter++;
         let title = eventNames[Math.floor(Math.random() * eventNames.length)];
         let start = new Date();
         let end = new Date();
@@ -42,7 +47,7 @@ export class AEvent {
         let participationFee = isTicketed ? Math.floor(Math.random() * 15) : 0;
         let maxParticipants = isTicketed ? Math.floor(Math.random() * 200) : 0;
 
-        return new AEvent(title, start, end, description, status, isTicketed, participationFee, maxParticipants);
+        return new AEvent(id, title, start, end, description, status, isTicketed, participationFee, maxParticipants);
     }
 
 
@@ -108,5 +113,14 @@ export class AEvent {
 
     set maxParticipants(value: number) {
         this._maxParticipants = value;
+    }
+
+
+    get id(): number {
+        return this._id;
+    }
+
+    set id(value: number) {
+        this._id = value;
     }
 }
