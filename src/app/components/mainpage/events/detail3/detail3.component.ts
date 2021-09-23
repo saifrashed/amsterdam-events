@@ -57,6 +57,10 @@ export class Detail3Component implements OnInit {
       this.getAEvent()
     }
 
+    cancel(): void{
+      this.reselect(-1)
+    }
+
     reselect(eId: number) {
         this.editedAEventId = eId;
         this.editedAEventIdChange.emit(this.editedAEventId)
