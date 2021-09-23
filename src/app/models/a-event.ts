@@ -34,11 +34,11 @@ export class AEvent {
 
     public static createRandomAEvent(): AEvent {
 
-        let eventNames = ['Amsterdam\'s Neighbourhood Secrets', 'How to spend Valentine\'s Day in Amsterdam', 'Winter day trips from Amsterdam', 'Canal Cruise Ticket'];
+        let eventNames = ['The fantastic event', 'The less fantastic event', 'the flat earth convention'];
         let statusEnum = [AEventStatus.Draft, AEventStatus.Published, AEventStatus.Canceled];
 
         let id = this.idCounter++;
-        let title = eventNames[Math.floor(Math.random() * eventNames.length)];
+        let title = eventNames[Math.floor(Math.random() * eventNames.length)] + "-" + id;
         let start = new Date();
         let end = new Date();
         let description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eget nisi sit amet enim fermentum tempor. Maecenas finibus, tortor non aliquam venenatis, risus enim imperdiet nisi, eget egestas tellus ipsum ac orci. Nulla semper urna sit amet tincidunt tristique. ";
@@ -50,6 +50,9 @@ export class AEvent {
         return new AEvent(id, title, start, end, description, status, isTicketed, participationFee, maxParticipants);
     }
 
+    public trueCopy(): AEvent {
+        return Object.assign(new AEvent(0, "", new Date(), new Date(), "", AEventStatus.Draft, false,0, 0 ), this)
+    }
 
     get title(): string {
         return this._title;

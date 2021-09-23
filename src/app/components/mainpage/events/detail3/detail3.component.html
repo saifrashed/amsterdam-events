@@ -1,0 +1,70 @@
+<div *ngIf="editedAEventId != -1; else detailMessage" class="row">
+    <table class="table">
+        <thead>
+        <tr>
+            <th colspan="2" scope="col">Selected event details: (id={{editableAEvent.id}})</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th class="table-dark">Title</th>
+            <td><input class="w-100" type="text" [(ngModel)]="editableAEvent.title"></td>
+        </tr>
+        <tr>
+            <th class="table-dark">Description</th>
+            <td><textarea class="w-100" [(ngModel)]="editableAEvent.description"></textarea></td>
+        </tr>
+        <tr>
+            <th class="table-dark">Status</th>
+            <td>
+                <select [(ngModel)]="editableAEvent.status">
+                    <option *ngFor="let option of statusOptions" [selected]="option == editableAEvent.status" >{{option}}</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th class="table-dark">Is Ticketed</th>
+            <td>
+                <input type="checkbox" [(ngModel)]="editableAEvent.isTicketed" >
+            </td>
+        </tr>
+        <tr>
+            <th class="table-dark">Participation fee</th>
+            <td><input type="number" [(ngModel)]="editableAEvent.participationFee"></td>
+        </tr>
+        <tr>
+            <th class="table-dark">Maximum Participation</th>
+            <td><input type="number" [(ngModel)]="editableAEvent.maxParticipants"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button class="btn btn-secondary float-end m-1" type="button" (click)="deleteAEvent(editableAEvent.id)" >
+                    Cancel
+                </button>
+
+                <button class="btn btn-secondary float-end m-1" type="button" (click)="deleteAEvent(editableAEvent.id)" >
+                    Reset
+                </button>
+
+                <button class="btn btn-secondary float-end m-1" type="button" (click)="deleteAEvent(editableAEvent.id)" >
+                    Clear
+                </button>
+
+                <button class="btn btn-secondary float-end m-1" type="button" (click)="saveAEvent()" >
+                    Save
+                </button>
+
+                <button class="btn btn-danger float-end m-1" type="button" (click)="deleteAEvent(editableAEvent.id)" >
+                    Delete
+                </button>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+
+
+<ng-template #detailMessage>
+    Select an event at the left
+</ng-template>

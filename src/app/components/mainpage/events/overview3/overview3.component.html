@@ -8,12 +8,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let event of aEvents">
+            <tr *ngFor="let event of AEventsService.findAll()">
                 <td (click)="selectAEvent(event)">{{event.title}}</td>
             </tr>
             <tr>
                 <td colspan="8">
-                    <button (click)="addRandomAEvent()" class="btn btn-primary float-end" type="button">Add Event
+                    <button (click)="AEventsService.addRandomAEvent()" class="btn btn-primary float-end" type="button">Add Event
                     </button>
                 </td>
             </tr>
@@ -24,7 +24,7 @@
     <div class="col-md-9">
         <aside class=" sticky-xl-top align-self-start mb-3 mb-xl-5 px-2">
             <h2 class="h6 pt-4 pb-3 mb-4 border-bottom">Detail information:</h2>
-            <app-detail-two (outputEvent)="deleteAEvent($event)" [detailEvent]="selectedAEvent"></app-detail-two>
+            <app-detail-three [(editedAEventId)]="selectedAEventId"></app-detail-three>
         </aside>
     </div>
 </div>

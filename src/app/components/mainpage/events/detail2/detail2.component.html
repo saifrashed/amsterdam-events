@@ -1,8 +1,8 @@
-<div class="row" *ngIf="detailEvent != null; else detailMessage">
+<div *ngIf="detailEvent != null; else detailMessage" class="row">
     <table class="table">
         <thead>
         <tr>
-            <th scope="col" colspan="2">Selected event details: (id={{detailEvent.id}})</th>
+            <th colspan="2" scope="col">Selected event details: (id={{detailEvent.id}})</th>
         </tr>
         </thead>
         <tbody>
@@ -12,33 +12,35 @@
         </tr>
         <tr>
             <th class="table-dark">Description</th>
-            <td>{{detailEvent.description}}</td>
+            <td><textarea class="w-100" [(ngModel)]="detailEvent.description"></textarea></td>
         </tr>
         <tr>
             <th class="table-dark">Status</th>
             <td>
-                <select>
-                    <option>{{detailEvent.status}}</option>
+                <select [(ngModel)]="detailEvent.status">
+                    <option *ngFor="let option of statusOptions" [selected]="option == detailEvent.status">
+                        {{option}}
+                    </option>
                 </select>
             </td>
         </tr>
         <tr>
             <th class="table-dark">Is Ticketed</th>
             <td>
-                <input type="checkbox" [(ngModel)]="detailEvent.isTicketed">
+                <input type="checkbox" [(ngModel)]="detailEvent.isTicketed" >
             </td>
         </tr>
         <tr>
             <th class="table-dark">Participation fee</th>
-            <td>{{detailEvent.participationFee}}</td>
+            <td><input type="number" [(ngModel)]="detailEvent.participationFee"></td>
         </tr>
         <tr>
             <th class="table-dark">Maximum Participation</th>
-            <td>{{detailEvent.maxParticipants}}</td>
+            <td><input type="number" [(ngModel)]="detailEvent.maxParticipants"></td>
         </tr>
         <tr>
             <td colspan="2">
-                <button type="button" class="btn btn-danger float-end" (click)="outputEvent.emit(detailEvent.id)">
+                <button (click)="outputEvent.emit(detailEvent.id)" class="btn btn-danger float-end" type="button">
                     Delete Event
                 </button>
             </td>
