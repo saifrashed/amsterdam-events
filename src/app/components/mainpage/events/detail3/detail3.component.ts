@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AEventsService} from "../../../../services/a-events.service";
 import {FormControl, FormGroup} from "@angular/forms";
+import {AEvent} from "../../../../models/a-event";
 
 @Component({
     selector: 'app-detail-three',
@@ -38,9 +39,21 @@ export class Detail3Component implements OnInit {
     }
 
     saveAEvent() {
-        console.log(this.editableAEvent)
-        console.log(this.AEventsService.findById(this.editableAEvent.id))
+        this.AEventsService.save(this.editableAEvent)
+    }
 
+    clearAEvent(): void{
+      this.editableAEvent.title = ""
+      this.editableAEvent.description = ""
+      this.editableAEvent.status = ""
+      this.editableAEvent.isTicketed = ""
+      this.editableAEvent.participationFee = ""
+      this.editableAEvent._maxParticipants = ""
+    }
+
+    reset(): void{
+      this.editableAEvent.id
+      console.log(this.editableAEvent.id)
     }
 
     reselect(eId: number) {
