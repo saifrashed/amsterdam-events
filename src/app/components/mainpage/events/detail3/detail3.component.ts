@@ -28,12 +28,6 @@ export class Detail3Component implements OnInit {
     this.getAEvent();
   }
 
-  click():void {
-    if (confirm("Are you sure to delete " + this.editableAEvent.title)) {
-      console.log("Delete Title");
-    }
-  }
-
   getAEvent(): void {
     if (this.editedAEventId != -1) {
       this.editableAEvent = this.AEventsService.findById(this.editedAEventId).trueCopy();
@@ -52,20 +46,26 @@ export class Detail3Component implements OnInit {
   }
 
   clearAEvent(): void {
-    this.editableAEvent.title = ""
-    this.editableAEvent.description = ""
-    this.editableAEvent.status = ""
-    this.editableAEvent.isTicketed = ""
-    this.editableAEvent.participationFee = ""
-    this.editableAEvent._maxParticipants = ""
+    if (confirm("Are you sure you want to clear " + this.editableAEvent.title)) {
+      this.editableAEvent.title = ""
+      this.editableAEvent.description = ""
+      this.editableAEvent.status = ""
+      this.editableAEvent.isTicketed = ""
+      this.editableAEvent.participationFee = ""
+      this.editableAEvent._maxParticipants = ""
+    }
   }
 
   reset(): void {
-    this.getAEvent()
+    if (confirm("Are you sure you want to reset " + this.editableAEvent.title)) {
+      this.getAEvent()
+    }
   }
 
   cancel(): void {
-    this.reselect(-1)
+    if (confirm("Are you sure you want to cancel " + this.editableAEvent.title)) {
+      this.reselect(-1)
+    }
   }
 
   reselect(eId: number) {
