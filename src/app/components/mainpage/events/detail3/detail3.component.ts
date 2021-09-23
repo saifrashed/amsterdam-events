@@ -30,7 +30,9 @@ export class Detail3Component implements OnInit {
 
 
     getAEvent(): void {
-        this.editableAEvent = this.AEventsService.findById(this.editedAEventId).trueCopy();
+        if(this.editedAEventId != -1) {
+            this.editableAEvent = this.AEventsService.findById(this.editedAEventId).trueCopy();
+        }
     }
 
     deleteAEvent(eId: number): void {
