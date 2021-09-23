@@ -52,8 +52,7 @@ export class Detail3Component implements OnInit {
     }
 
     reset(): void{
-      this.editableAEvent.id
-      console.log(this.editableAEvent.id)
+      this.getAEvent()
     }
 
     reselect(eId: number) {
