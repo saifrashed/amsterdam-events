@@ -10,7 +10,7 @@ export class Detail2Component implements OnInit {
     @Input() detailEvent: any; // decorate the property with @Input()
     @Output() outputEvent: EventEmitter<string> = new EventEmitter();
 
-    public statusOptions: Array<string> = ['DRAFT','PUBLISHED','CANCELED'];
+    public statusOptions: Array<string> = ['DRAFT', 'PUBLISHED', 'CANCELED'];
 
     constructor() {
     }

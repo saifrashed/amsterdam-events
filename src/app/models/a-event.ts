@@ -1,6 +1,6 @@
 // type AEventStatus = "DRAFT" | "PUBLISHED" | "CANCELED";
 
-enum AEventStatus {
+export enum AEventStatus {
     Draft = "DRAFT",
     Published = "PUBLISHED",
     Canceled = "CANCELED"

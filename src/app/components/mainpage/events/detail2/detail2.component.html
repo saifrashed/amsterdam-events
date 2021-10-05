@@ -8,11 +8,11 @@
         <tbody>
         <tr>
             <th class="table-dark">Title</th>
-            <td><input class="w-100" type="text" [(ngModel)]="detailEvent.title"></td>
+            <td><input [(ngModel)]="detailEvent.title" class="w-100" type="text"></td>
         </tr>
         <tr>
             <th class="table-dark">Description</th>
-            <td><textarea class="w-100" [(ngModel)]="detailEvent.description"></textarea></td>
+            <td><textarea [(ngModel)]="detailEvent.description" class="w-100"></textarea></td>
         </tr>
         <tr>
             <th class="table-dark">Status</th>
@@ -27,16 +27,16 @@
         <tr>
             <th class="table-dark">Is Ticketed</th>
             <td>
-                <input type="checkbox" [(ngModel)]="detailEvent.isTicketed" >
+                <input [(ngModel)]="detailEvent.isTicketed" type="checkbox">
             </td>
         </tr>
         <tr>
             <th class="table-dark">Participation fee</th>
-            <td><input type="number" [(ngModel)]="detailEvent.participationFee"></td>
+            <td><input [(ngModel)]="detailEvent.participationFee" type="number"></td>
         </tr>
         <tr>
             <th class="table-dark">Maximum Participation</th>
-            <td><input type="number" [(ngModel)]="detailEvent.maxParticipants"></td>
+            <td><input [(ngModel)]="detailEvent.maxParticipants" type="number"></td>
         </tr>
         <tr>
             <td colspan="2">

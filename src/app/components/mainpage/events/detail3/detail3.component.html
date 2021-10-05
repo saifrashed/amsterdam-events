@@ -8,53 +8,54 @@
         <tbody>
         <tr>
             <th class="table-dark">Title</th>
-            <td><input class="w-100" type="text" [(ngModel)]="editableAEvent.title"></td>
+            <td><input [(ngModel)]="editableAEvent.title" class="w-100" type="text"></td>
         </tr>
         <tr>
             <th class="table-dark">Description</th>
-            <td><textarea class="w-100" [(ngModel)]="editableAEvent.description"></textarea></td>
+            <td><textarea [(ngModel)]="editableAEvent.description" class="w-100"></textarea></td>
         </tr>
         <tr>
             <th class="table-dark">Status</th>
             <td>
                 <select [(ngModel)]="editableAEvent.status">
-                    <option *ngFor="let option of statusOptions" [selected]="option == editableAEvent.status" >{{option}}</option>
+                    <option *ngFor="let option of statusOptions"
+                            [selected]="option == editableAEvent.status">{{option}}</option>
                 </select>
             </td>
         </tr>
         <tr>
             <th class="table-dark">Is Ticketed</th>
             <td>
-                <input type="checkbox" [(ngModel)]="editableAEvent.isTicketed" >
+                <input [(ngModel)]="editableAEvent.isTicketed" type="checkbox">
             </td>
         </tr>
         <tr>
             <th class="table-dark">Participation fee</th>
-            <td><input type="number" [(ngModel)]="editableAEvent.participationFee"></td>
+            <td><input [(ngModel)]="editableAEvent.participationFee" type="number"></td>
         </tr>
         <tr>
             <th class="table-dark">Maximum Participation</th>
-            <td><input type="number" [(ngModel)]="editableAEvent.maxParticipants"></td>
+            <td><input [(ngModel)]="editableAEvent.maxParticipants" type="number"></td>
         </tr>
         <tr>
             <td colspan="2">
-              <button class="btn btn-secondary float-end m-1" type="button" (click)= "cancel()" >
+                <button (click)="cancel()" class="btn btn-secondary float-end m-1" type="button">
                     Cancel
                 </button>
 
-                <button class="btn btn-secondary float-end m-1" type="button" (click)="reset()" >
+                <button (click)="reset()" class="btn btn-secondary float-end m-1" type="button">
                     Reset
                 </button>
 
-                <button class="btn btn-secondary float-end m-1" type="button" (click)="clearAEvent()" >
+                <button (click)="clearAEvent()" class="btn btn-secondary float-end m-1" type="button">
                     Clear
                 </button>
 
-                <button class="btn btn-secondary float-end m-1" type="button" (click)="saveAEvent()" >
+                <button (click)="saveAEvent()" class="btn btn-secondary float-end m-1" type="button">
                     Save
                 </button>
 
-                <button class="btn btn-danger float-end m-1" type="button" (click)="deleteAEvent(editableAEvent.id)" >
+                <button (click)="deleteAEvent(editableAEvent.id)" class="btn btn-danger float-end m-1" type="button">
                     Delete
                 </button>
             </td>

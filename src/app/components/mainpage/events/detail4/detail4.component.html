@@ -1,0 +1,73 @@
+<div *ngIf="editedAEventId != -1; else detailMessage" class="row">
+    <form [formGroup]="eventForm">
+        <table class="table">
+            <thead>
+            <tr>
+                <th colspan="2" scope="col">Selected event details: (id={{eventForm.controls["id"].value}})</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th class="table-dark">Title</th>
+                <td><input class="w-100" formControlName="title" type="text"></td>
+            </tr>
+            <tr>
+                <th class="table-dark">Description</th>
+                <td><textarea class="w-100" formControlName="description"></textarea></td>
+            </tr>
+            <tr>
+                <th class="table-dark">Status</th>
+                <td>
+                    <select formControlName="status">
+                        <option *ngFor="let option of statusOptions"
+                                [selected]="option == eventForm.controls['status'].value">{{option}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="table-dark">Is Ticketed</th>
+                <td>
+                    <input formControlName="isTicketed" type="checkbox">
+                </td>
+            </tr>
+            <tr>
+                <th class="table-dark">Participation fee</th>
+                <td><input formControlName="participationFee" type="number"></td>
+            </tr>
+            <tr>
+                <th class="table-dark">Maximum Participation</th>
+                <td><input formControlName="maxParticipants" type="number"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button (click)="cancel()" class="btn btn-secondary float-end m-1" type="button">
+                        Cancel
+                    </button>
+
+                    <button (click)="reset()" class="btn btn-secondary float-end m-1" type="button">
+                        Reset
+                    </button>
+
+                    <button (click)="clearAEvent()" class="btn btn-secondary float-end m-1" type="button">
+                        Clear
+                    </button>
+
+                    <button (click)="saveAEvent()" class="btn btn-secondary float-end m-1" type="button">
+                        Save
+                    </button>
+
+                    <button (click)="deleteAEvent(eventForm.controls['id'].value)" class="btn btn-danger float-end m-1"
+                            type="button">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+
+<ng-template #detailMessage>
+    Select an event at the left
+</ng-template>
