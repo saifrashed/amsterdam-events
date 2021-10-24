@@ -6,5 +6,11 @@ import com.aeserver.model.AEvent;
 import java.util.List;
 
 public interface AEventsRepository  {
-  public List<AEvent> findAll();
+   List<AEvent> findAll();
+
+   AEvent findById(long id);
+
+   AEvent save(AEvent aEvent);
+
+   boolean deleteById(long id);
 }

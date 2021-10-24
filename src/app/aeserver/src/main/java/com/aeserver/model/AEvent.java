@@ -1,6 +1,9 @@
 package com.aeserver.model;
 
 
+import com.aeserver.view.Views;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.util.Date;
 
 public class AEvent {
@@ -12,16 +15,25 @@ public class AEvent {
 
   public static int idCounter = 20001;
 
+  @JsonView(Views.Summary.class)
   private int id;
+
+  @JsonView(Views.Summary.class)
   private String title;
   private Date start;
   private Date end;
   private String description;
+
+  @JsonView(Views.Summary.class)
   private AEventStatus status;
+
   private boolean isTicketed;
   private double participationFee;
   private int maxParticipants;
 
+  public AEvent() {
+
+  }
 
   public AEvent(int id, String title, Date start, Date end, String description, AEventStatus status, boolean isTicketed, double participationFee, int maxParticipants) {
     this.id = id;
