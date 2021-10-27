@@ -19,7 +19,6 @@ import {Detail41Component} from './components/mainpage/events/detail41/detail41.
 import {Detail4qpComponent} from './components/mainpage/events/detail4qp/detail4qp.component';
 
 import {NotFoundComponent} from './components/mainpage/not-found/not-found.component';
-import { FacultyComponent } from './components/views/application/faculty/faculty.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +37,6 @@ import { FacultyComponent } from './components/views/application/faculty/faculty
         Detail41Component,
         Detail4qpComponent,
         NotFoundComponent,
-        FacultyComponent
     ],
     imports: [
         BrowserModule,
