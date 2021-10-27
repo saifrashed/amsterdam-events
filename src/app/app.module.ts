@@ -18,34 +18,39 @@ import {Detail4Component} from './components/mainpage/events/detail4/detail4.com
 import {Detail41Component} from './components/mainpage/events/detail41/detail41.component';
 import {Detail4qpComponent} from './components/mainpage/events/detail4qp/detail4qp.component';
 
+import {Detail5Component} from './components/mainpage/events/detail5/detail5.component';
+import {Overview5Component} from './components/mainpage/events/overview5/overview5.component';
+
 import {NotFoundComponent} from './components/mainpage/not-found/not-found.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HeaderComponent,
-        HomeComponent,
-        NavBarComponent,
-        Overview1Component,
-        Overview2Component,
-        Detail2Component,
-        Overview3Component,
-        Overview4Component,
-        Overview4qpComponent,
-        Detail3Component,
-        Detail4Component,
-        Detail41Component,
-        Detail4qpComponent,
-        NotFoundComponent,
-    ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AppRoutingModule
-    ],
-    providers: [],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    HomeComponent,
+    NavBarComponent,
+    Overview1Component,
+    Overview2Component,
+    Detail2Component,
+    Overview3Component,
+    Overview4Component,
+    Overview4qpComponent,
+    Overview5Component,
+    Detail3Component,
+    Detail4Component,
+    Detail41Component,
+    Detail4qpComponent,
+    Detail5Component,
+    NotFoundComponent,
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
