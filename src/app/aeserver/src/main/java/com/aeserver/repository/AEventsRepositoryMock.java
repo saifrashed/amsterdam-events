@@ -1,11 +1,13 @@
 package com.aeserver.repository;
 
 import com.aeserver.model.AEvent;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Primary
 @Repository
 public class AEventsRepositoryMock implements AEventsRepository {
 

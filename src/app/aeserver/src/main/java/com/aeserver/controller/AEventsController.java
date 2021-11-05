@@ -21,7 +21,7 @@ import java.util.List;
 public class AEventsController {
 
   @Autowired
-  AEventsRepositoryMock eventRepo;
+  AEventsRepository eventRepo;
 
 
   @GetMapping("/aevent")
