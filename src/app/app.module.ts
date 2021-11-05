@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module'; // CLI imports AppRoutingModule
@@ -23,6 +24,7 @@ import {Overview5Component} from './components/mainpage/events/overview5/overvie
 
 import {NotFoundComponent} from './components/mainpage/not-found/not-found.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +46,7 @@ import {NotFoundComponent} from './components/mainpage/not-found/not-found.compo
     NotFoundComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,

@@ -2,54 +2,54 @@ import {Injectable} from '@angular/core';
 import {AEvent} from "../models/a-event";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class AEventsService {
 
-    public aEvents: AEvent[];
+  public aEvents: AEvent[];
 
-    constructor() {
-        this.aEvents = [];
-        for (let i = 0; i < 9; i++) {
-            this.addRandomAEvent();
-        }
+  constructor() {
+    this.aEvents = [];
+    for (let i = 0; i < 9; i++) {
+      this.addRandomAEvent();
     }
+  }
 
-    findAll(): AEvent[] {
-        return this.aEvents;
-    }
+  findAll(): AEvent[] {
+    return this.aEvents;
+  }
 
-    findById(eId: number): AEvent {
-        var eventIndex = this.aEvents.map(item => item.id).indexOf(eId);
+  findById(eId: number): AEvent {
+    var eventIndex = this.aEvents.map(item => item.id).indexOf(eId);
 
-        return this.aEvents[eventIndex];
-    }
+    return this.aEvents[eventIndex];
+  }
 
-    save(aEvent: AEvent): AEvent {
-        var saveIndex = this.aEvents.map(item => item.id).indexOf(aEvent.id);
-        const previousEvent = this.aEvents[saveIndex];
+  save(aEvent: AEvent): AEvent {
+    var saveIndex = this.aEvents.map(item => item.id).indexOf(aEvent.id);
+    const previousEvent = this.aEvents[saveIndex];
 
-        this.aEvents[saveIndex] = aEvent;
+    this.aEvents[saveIndex] = aEvent;
 
-        return previousEvent;
-    }
+    return previousEvent;
+  }
 
-    deleteById(eId: number): AEvent {
+  deleteById(eId: number): AEvent {
 
-        var removeIndex = this.aEvents.map(item => item.id).indexOf(eId);
-        const deletedEvent = this.aEvents[removeIndex];
+    var removeIndex = this.aEvents.map(item => item.id).indexOf(eId);
+    const deletedEvent = this.aEvents[removeIndex];
 
-        this.aEvents.splice(removeIndex, 1);
+    this.aEvents.splice(removeIndex, 1);
 
-        return deletedEvent;
-    }
+    return deletedEvent;
+  }
 
-    /**
-     * Adds a random event
-     */
-    addRandomAEvent(): void {
-        this.aEvents.push(AEvent.createRandomAEvent());
-    }
+  /**
+   * Adds a random event
+   */
+  addRandomAEvent(): void {
+    this.aEvents.push(AEvent.createRandomAEvent());
+  }
 
 
 }
