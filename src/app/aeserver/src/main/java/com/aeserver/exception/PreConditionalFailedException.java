@@ -8,12 +8,15 @@ public class PreConditionalFailedException extends RuntimeException {
   public PreConditionalFailedException() {
     super();
   }
+
   public PreConditionalFailedException(String message, Throwable cause) {
     super(message, cause);
   }
+
   public PreConditionalFailedException(String message) {
     super(message);
   }
+
   public PreConditionalFailedException(Throwable cause) {
     super(cause);
   }

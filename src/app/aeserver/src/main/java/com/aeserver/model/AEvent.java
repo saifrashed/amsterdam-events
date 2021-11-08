@@ -2,6 +2,7 @@ package com.aeserver.model;
 
 
 import com.aeserver.view.Views;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.util.Date;
@@ -16,23 +17,36 @@ public class AEvent {
   public static int idCounter = 20001;
 
   @JsonView(Views.Summary.class)
+  @JsonProperty("_id")
   private int id;
 
   @JsonView(Views.Summary.class)
+  @JsonProperty("_title")
   private String title;
+
+  @JsonProperty("_start")
   private Date start;
+
+  @JsonProperty("_end")
   private Date end;
+
+  @JsonProperty("_description")
   private String description;
 
   @JsonView(Views.Summary.class)
+  @JsonProperty("_status")
   private AEventStatus status;
 
+  @JsonProperty("_isTicketed")
   private boolean isTicketed;
+
+  @JsonProperty("_participationFee")
   private double participationFee;
+
+  @JsonProperty("_maxParticipants")
   private int maxParticipants;
 
   public AEvent() {
-
   }
 
   public AEvent(int id, String title, Date start, Date end, String description, AEventStatus status, boolean isTicketed, double participationFee, int maxParticipants) {
@@ -121,15 +135,15 @@ public class AEvent {
 
   public static AEvent createRandomAEvent() {
 
-     int id = AEvent.idCounter++;
-     String title = "test-event";
-     Date start = new Date();
-     Date end = new Date();
-     String description = "test";
-     AEventStatus status = AEventStatus.PUBLISHED;
-     boolean isTicketed = true;
-     double participationFee = 20.34;
-     int maxParticipants = 40;
+    int id = AEvent.idCounter++;
+    String title = "test-event";
+    Date start = new Date();
+    Date end = new Date();
+    String description = "test";
+    AEventStatus status = AEventStatus.PUBLISHED;
+    boolean isTicketed = true;
+    double participationFee = 20.34;
+    int maxParticipants = 40;
 
     return new AEvent(id, title, start, end, description, status, isTicketed, participationFee, maxParticipants);
   }

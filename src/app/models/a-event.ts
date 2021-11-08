@@ -54,6 +54,12 @@ export class AEvent {
         return Object.assign(new AEvent(0, "", new Date(), new Date(), "", AEventStatus.Draft, false,0, 0 ), this)
     }
 
+    static trueCopy(aevent: AEvent): AEvent {
+        return Object.assign(new AEvent(0, "", new Date(), new Date(), "", AEventStatus.Draft, false,0, 0 ), aevent)
+    }
+
+
+
     get title(): string {
         return this._title;
     }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AEventsService} from "../../../../services/a-events.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {AEvent} from "../../../../models/a-event";
 
 @Component({
     selector: 'app-overview-four',
@@ -10,6 +11,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 
 export class Overview4Component implements OnInit {
 
+    public events: AEvent[] = [];
+
+
     constructor(public AEventsService: AEventsService, public router: Router, public activatedRoute: ActivatedRoute) {
     }
 
@@ -17,6 +21,15 @@ export class Overview4Component implements OnInit {
      * Initialise method
      */
     ngOnInit(): void {
+        this.getEvents();
+    }
+
+    onAddEvent(): void{
+        this.AEventsService.addRandomAEvent()
+    }
+
+    getEvents(): void {
+        this.events = this.AEventsService.findAll();
     }
 
     /**

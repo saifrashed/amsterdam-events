@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AEventsService} from "../../../../services/a-events-sb";
+import {AEventsService} from "../../../../services/a-events-sb.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -11,6 +11,7 @@ import {AEvent, AEventStatus} from "../../../../models/a-event";
     styleUrls: ['../detail4/detail4.component.css'],
 })
 export class Detail5Component implements OnInit {
+
     eventForm = new FormGroup({
         id: new FormControl(''),
         title: new FormControl(''),
@@ -20,21 +21,17 @@ export class Detail5Component implements OnInit {
         participationFee: new FormControl(''),
         maxParticipants: new FormControl(''),
     });
+
     public editedAEventId: any;
     public statusOptions: Array<string> = ['DRAFT', 'PUBLISHED', 'CANCELED'];
+
     protected childParamsSubscription: Subscription = null as any;
 
     constructor(public AEventsService: AEventsService, public router: Router, public activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        this.childParamsSubscription = this.activatedRoute.params.subscribe((params: Params) => {
-            console.log("Detail setup id=" + params["id"]);
-
-            this.setEditedAEventId(params["id"] || -1);
-            this.getAEvent();
-        });
-
+        this.getAEvent();
     }
 
     ngOnDestroy(): void {
@@ -46,20 +43,24 @@ export class Detail5Component implements OnInit {
     }
 
     getAEvent(): void {
-        if (this.editedAEventId != -1) {
+        this.activatedRoute.params.subscribe((params: Params) => {
+            this.AEventsService.findById(params["id"]).subscribe(event => {
 
-            let event = this.AEventsService.findById(parseInt(this.editedAEventId));
+                if (event.id == 0)  {
+                    this.router.navigate(["../"], {relativeTo: this.activatedRoute})
+                }
 
-            this.eventForm.setValue({
-                id: event.id,
-                title: event.title,
-                description: event.description,
-                status: event.status,
-                isTicketed: event.isTicketed,
-                participationFee: event.participationFee,
-                maxParticipants: event.maxParticipants,
+                this.eventForm.setValue({
+                    id: event.id,
+                    title: event.title,
+                    description: event.description,
+                    status: event.status,
+                    isTicketed: event.isTicketed,
+                    participationFee: event.participationFee,
+                    maxParticipants: event.maxParticipants,
+                })
             })
-        }
+        });
     }
 
     deleteAEvent(eId: number): void {
@@ -69,9 +70,12 @@ export class Detail5Component implements OnInit {
     }
 
     saveAEvent() {
-        this.AEventsService.save(Object.assign(new AEvent(0, "", new Date(), new Date(), "", AEventStatus.Draft, false, 0, 0), this.eventForm.value));
-        this.eventForm.markAsPristine();
-        this.getAEvent();
+        this.AEventsService.restPutAEvent(AEvent.trueCopy(this.eventForm.value)).subscribe(data => {
+            console.log(data);
+            this.eventForm.markAsPristine();
+            this.getAEvent();
+        });
+
     }
 
     clearAEvent(): void {

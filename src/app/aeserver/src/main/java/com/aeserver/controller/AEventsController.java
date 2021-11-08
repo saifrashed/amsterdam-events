@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
+@CrossOrigin(origins = "*") //this line
 @RestController
 @RequestMapping("/api")
 public class AEventsController {
@@ -52,9 +53,14 @@ public class AEventsController {
   }
 
   @PutMapping("/aevent/{id}")
+  @ResponseBody
   public ResponseEntity<AEvent> putEventById(@PathVariable Long id, @RequestBody AEvent event) {
 
-    if(event.getId() != id) throw new PreConditionalFailedException("AEvent-Id="+event.getId()+" does not match path parameter=" + id);
+    System.out.println(event.getDescription());
+
+
+    if (event.getId() != id)
+      throw new PreConditionalFailedException("AEvent-Id=" + event.getId() + " does not match path parameter=" + id);
 
     eventRepo.deleteById(id);
     AEvent events = eventRepo.save(event);
@@ -65,7 +71,7 @@ public class AEventsController {
   public ResponseEntity<?> deleteEventById(@PathVariable Long id) {
     boolean deletionStatus = eventRepo.deleteById(id);
 
-    if(deletionStatus == false) throw new ResourceNotFoundException("AEvent-Id does not exist.");
+    if (deletionStatus == false) throw new ResourceNotFoundException("AEvent-Id does not exist.");
 
     return new ResponseEntity<>(deletionStatus, HttpStatus.OK);
   }

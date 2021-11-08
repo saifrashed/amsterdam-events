@@ -9,6 +9,7 @@ import {Detail4Component} from './components/mainpage/events/detail4/detail4.com
 import {Detail41Component} from './components/mainpage/events/detail41/detail41.component';
 import {Detail4qpComponent} from './components/mainpage/events/detail4qp/detail4qp.component';
 import {Overview4qpComponent} from './components/mainpage/events/overview4qp/overview4qp.component';
+
 import {Overview5Component} from './components/mainpage/events/overview5/overview5.component';
 import {Detail5Component} from './components/mainpage/events/detail5/detail5.component';
 

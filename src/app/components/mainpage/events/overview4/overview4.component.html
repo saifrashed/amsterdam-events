@@ -8,12 +8,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let event of AEventsService.findAll()">
+            <tr *ngFor="let event of events">
                 <td (click)="selectAEvent(event.id)">{{event.title}}</td>
             </tr>
             <tr>
                 <td colspan="8">
-                    <button (click)="AEventsService.addRandomAEvent()" class="btn btn-primary float-end" type="button">
+                    <button (click)="onAddEvent()" class="btn btn-primary float-end" type="button">
                         Add Event
                     </button>
                 </td>
