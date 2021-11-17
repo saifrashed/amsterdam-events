@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CanDeactivate, RouterModule, Routes} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./components/mainpage/home/home.component";
 import {Overview1Component} from "./components/mainpage/events/overview1/overview1.component";
 import {Overview2Component} from "./components/mainpage/events/overview2/overview2.component";
@@ -17,62 +17,62 @@ import {NotFoundComponent} from './components/mainpage/not-found/not-found.compo
 import {CanDeactivateGuard} from "./services/can-deactivate-guard.service";
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'overview-one', component: Overview1Component},
-  {path: 'overview-two', component: Overview2Component},
-  {path: 'overview-three', component: Overview3Component},
-  {
-    path: 'overview-four',
-    component: Overview4Component,
-    children: [
-      {
-        path: ':id', // child route path
-        component: Detail4Component, // child route component that the router renders
-      }
-    ]
-  },
-  {
-    path: 'overview-four-one',
-    component: Overview4Component,
-    children: [
-      {
-        path: ':id', // child route path
-        component: Detail41Component, // child route component that the router renders
-        canDeactivate: [CanDeactivateGuard]
-      }
-    ]
-  },
-  {
-    path: 'overview-four-qp',
-    component: Overview4qpComponent,
-    children: [
-      {
-        path: 'edit', // child route path
-        component: Detail4qpComponent, // child route component that the router renders
-        canDeactivate: [CanDeactivateGuard]
-      }
-    ]
-  },
-  {
-    path: 'overview-five',
-    component: Overview5Component,
-    children: [
-      {
-        path: ':id',
-        component: Detail5Component,
-      }
-    ]
-  },
-  {
-    path: '**', pathMatch: 'full',
-    component: NotFoundComponent
-  },
+    {path: '', component: HomeComponent},
+    {path: 'overview-one', component: Overview1Component},
+    {path: 'overview-two', component: Overview2Component},
+    {path: 'overview-three', component: Overview3Component},
+    {
+        path: 'overview-four',
+        component: Overview4Component,
+        children: [
+            {
+                path: ':id', // child route path
+                component: Detail4Component, // child route component that the router renders
+            }
+        ]
+    },
+    {
+        path: 'overview-four-one',
+        component: Overview4Component,
+        children: [
+            {
+                path: ':id', // child route path
+                component: Detail41Component, // child route component that the router renders
+                canDeactivate: [CanDeactivateGuard]
+            }
+        ]
+    },
+    {
+        path: 'overview-four-qp',
+        component: Overview4qpComponent,
+        children: [
+            {
+                path: 'edit', // child route path
+                component: Detail4qpComponent, // child route component that the router renders
+                canDeactivate: [CanDeactivateGuard]
+            }
+        ]
+    },
+    {
+        path: 'overview-five',
+        component: Overview5Component,
+        children: [
+            {
+                path: ':id',
+                component: Detail5Component,
+            }
+        ]
+    },
+    {
+        path: '**', pathMatch: 'full',
+        component: NotFoundComponent
+    },
 ]; // sets up routes constant where you define your routes
 
 // configures NgModule imports and exports
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {
 }

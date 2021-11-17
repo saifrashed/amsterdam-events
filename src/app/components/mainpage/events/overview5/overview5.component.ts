@@ -13,10 +13,8 @@ export class Overview5Component implements OnInit {
 
     public events: AEvent[] = [];
 
+
     constructor(public AEventsService: AEventsService, public router: Router, public activatedRoute: ActivatedRoute) {
-        this.AEventsService.restGetAEvents().subscribe(events => {
-            this.events = events;
-        });
     }
 
     /**
@@ -27,25 +25,17 @@ export class Overview5Component implements OnInit {
     }
 
     onAddEvent(): void{
-        this.AEventsService.addRandomAEvent().subscribe(event => {
-            this.selectAEvent(event.id);
-            this.getEvents();
-            console.log(event)
-        })
+        this.AEventsService.addRandomAEvent()
     }
 
     getEvents(): void {
-         this.AEventsService.restGetAEvents().subscribe(events => {
-             this.events = events;
-         });
+        this.events = this.AEventsService.findAll();
     }
-
 
     /**
      * Selects an event
      */
     selectAEvent(eId: number): void {
-        console.log(eId);
         this.router.navigate([eId], {relativeTo: this.activatedRoute})
     }
 }

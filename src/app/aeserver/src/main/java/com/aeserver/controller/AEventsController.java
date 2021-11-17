@@ -62,7 +62,6 @@ public class AEventsController {
     if (event.getId() != id)
       throw new PreConditionalFailedException("AEvent-Id=" + event.getId() + " does not match path parameter=" + id);
 
-    eventRepo.deleteById(id);
     AEvent events = eventRepo.save(event);
     return new ResponseEntity<>(events, HttpStatus.OK);
   }

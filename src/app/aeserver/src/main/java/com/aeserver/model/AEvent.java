@@ -4,9 +4,14 @@ package com.aeserver.model;
 import com.aeserver.view.Views;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.context.annotation.Primary;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@NamedQuery(name="find_all_events", query="select e from AEvent e")
 public class AEvent {
   enum AEventStatus {
     DRAFT,
@@ -14,11 +19,13 @@ public class AEvent {
     CANCELED
   }
 
-  public static int idCounter = 20001;
+  public static long idCounter = 20001;
 
   @JsonView(Views.Summary.class)
   @JsonProperty("_id")
-  private int id;
+  @Id
+  @GeneratedValue
+  private long id;
 
   @JsonView(Views.Summary.class)
   @JsonProperty("_title")
@@ -31,10 +38,12 @@ public class AEvent {
   private Date end;
 
   @JsonProperty("_description")
+  @Column(length = 1000)
   private String description;
 
   @JsonView(Views.Summary.class)
   @JsonProperty("_status")
+  @Enumerated(EnumType.STRING)
   private AEventStatus status;
 
   @JsonProperty("_isTicketed")
@@ -49,7 +58,8 @@ public class AEvent {
   public AEvent() {
   }
 
-  public AEvent(int id, String title, Date start, Date end, String description, AEventStatus status, boolean isTicketed, double participationFee, int maxParticipants) {
+  public AEvent(long id, String title, Date start, Date end, String description, AEventStatus status, boolean isTicketed, double participationFee, int maxParticipants) {
+
     this.id = id;
     this.title = title;
     this.start = start;
@@ -61,11 +71,11 @@ public class AEvent {
     this.maxParticipants = maxParticipants;
   }
 
-  public int getId() {
+  public long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(long id) {
     this.id = id;
   }
 
@@ -134,8 +144,7 @@ public class AEvent {
   }
 
   public static AEvent createRandomAEvent() {
-
-    int id = AEvent.idCounter++;
+    long id = AEvent.idCounter++;
     String title = "test-event";
     Date start = new Date();
     Date end = new Date();

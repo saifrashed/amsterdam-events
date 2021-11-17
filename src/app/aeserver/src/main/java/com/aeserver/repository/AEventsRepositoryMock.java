@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-@Primary
 @Repository
 public class AEventsRepositoryMock implements AEventsRepository {
 

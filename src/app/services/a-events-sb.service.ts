@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {AEvent} from "../models/a-event";
-import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, throwError} from 'rxjs';
-import {catchError, map, retry} from 'rxjs/operators';
+import {AEvent, AEventStatus} from "../models/a-event";
+import {Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
     providedIn: 'root'
@@ -11,116 +10,92 @@ export class AEventsService {
 
     apiURL = 'http://localhost:8084/api';
 
-    public aEvents: Observable<AEvent[]>;
+    public aEvents: AEvent[];
 
     constructor(private http: HttpClient) {
-       this.aEvents = this.restGetAEvents();
+        this.aEvents = [];
+        this.reload()
     }
 
-    restGetAEvents(): Observable<AEvent[]> {
-        return this.http.get<AEvent[]>(this.apiURL + '/aevent')
-            .pipe(
-                map(aevent => {
-                    return aevent.map(value => {
-                        return AEvent.trueCopy(value)
-                    });
-                }),
-                retry(1),
-                catchError(this.handleError)
-            )
-    }
-
-    restPostAEvent(aEvent: AEvent): Observable<AEvent> {
-        return this.http.post<AEvent>(this.apiURL + '/aevent', aEvent)
-            .pipe(
-                map(aevent => {
-                    console.log(aevent);
-
-                    return AEvent.trueCopy(aevent)
-                }),
-                retry(1),
-                catchError(this.handleError)
-            );
-    }
-
-    restPutAEvent(aEvent: AEvent): Observable<AEvent> {
-
-        console.log(JSON.stringify(aEvent));
-
-        return this.http.put<AEvent>(this.apiURL + '/aevent/' + aEvent.id, aEvent)
-            .pipe(
-                map(aevent => {
-                    return AEvent.trueCopy(aevent)
-                }),
-                retry(1),
-                catchError(this.handleError)
-            );
-    }
-
-    restDeleteAEvent(aEventId: number): void {
-        this.http.delete<AEvent>(this.apiURL + '/aevent/' + aEventId)
-            .pipe(
-                map(aevent => {
-                    return AEvent.trueCopy(aevent)
-                }),
-                retry(1),
-                catchError(this.handleError)
-            ).subscribe(data => {
-            this.aEvents = this.restGetAEvents();
+    reload(): void {
+        this.restGetAEvents().subscribe(result => {
+            result.forEach(event => {
+                this.aEvents.push(AEvent.trueCopy(event))
+            })
         });
     }
 
-
-    findAll(): Observable<AEvent[]> {
-        return this.restGetAEvents();
+    findAll(): AEvent[] {
+        return this.aEvents;
     }
 
-    findById(eId: number): Observable<AEvent> {
-        return this.http.get<AEvent>(this.apiURL + '/aevent/' + eId)
-            .pipe(
-                map(aevent => {
-                    return AEvent.trueCopy(aevent)
-                }),
-                retry(1),
-                catchError(this.handleError)
-            );
+    findById(eId: number): AEvent {
 
+        for (let i = 0; i < this.aEvents.length; i++) {
+            if (eId == this.aEvents[i].id) {
+                return this.aEvents[i];
+            }
+        }
+
+        return new AEvent(0, "", new Date(), new Date(), "", AEventStatus.Draft, false, 0, 0)
     }
 
+    save(aEvent: AEvent): AEvent {
+        var saveIndex = this.aEvents.map(item => item.id).indexOf(aEvent.id);
+        const previousEvent = this.aEvents[saveIndex];
 
-    deleteById(eId: number): void {
-        this.restDeleteAEvent(eId);
+        this.aEvents[saveIndex] = aEvent;
 
-        this.restGetAEvents().subscribe(value => {
-            this.aEvents = this.restGetAEvents();
+        this.restPutAEvent(aEvent).subscribe(result => {
+            console.log(result)
         });
+
+        return previousEvent;
+    }
+
+    deleteById(eId: number): AEvent {
+
+        var removeIndex = this.aEvents.map(item => item.id).indexOf(eId);
+        const deletedEvent = this.aEvents[removeIndex];
+
+
+        this.restDeleteAEvent(eId).subscribe(result => {
+            this.aEvents.splice(removeIndex, 1);
+        });
+
+        return deletedEvent;
     }
 
     /**
      * Adds a random event
      */
-    addRandomAEvent(): Observable<AEvent> {
-
+    addRandomAEvent(): void {
         let event = AEvent.createRandomAEvent();
-
         event.id = 0;
 
-        return this.restPostAEvent(event);
+        this.restPostAEvent(event).subscribe(result => {
+            this.aEvents.push(AEvent.trueCopy(result));
+        });
     }
 
 
-    // Error handling
-    handleError(error: any) {
-        let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-            // Get client-side error
-            errorMessage = error.error.message;
-        } else {
-            // Get server-side error
-            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-        }
-        console.log(errorMessage);
-        return throwError(errorMessage);
+    /**
+     * Rest calls
+     */
+    restGetAEvents(): Observable<AEvent[]> {
+        return this.http.get<AEvent[]>(this.apiURL + '/aevent')
+    }
+
+    restPostAEvent(aEvent: AEvent): Observable<AEvent> {
+        return this.http.post<AEvent>(this.apiURL + '/aevent', aEvent)
+    }
+
+    restPutAEvent(aEvent: AEvent): Observable<AEvent> {
+        return this.http.put<AEvent>(this.apiURL + '/aevent/' + aEvent.id, aEvent)
+    }
+
+    restDeleteAEvent(aEventId: number): Observable<AEvent> {
+        return this.http.delete<AEvent>(this.apiURL + '/aevent/' + aEventId)
     }
 
 
