@@ -34,7 +34,6 @@ export class Detail5Component implements OnInit {
             this.setEditedAEventId(params["id"] || -1);
             this.getAEvent();
         });
-
     }
 
     ngOnDestroy(): void {

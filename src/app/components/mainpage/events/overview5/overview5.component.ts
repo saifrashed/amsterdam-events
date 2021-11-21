@@ -17,14 +17,12 @@ export class Overview5Component implements OnInit {
     constructor(public AEventsService: AEventsService, public router: Router, public activatedRoute: ActivatedRoute) {
     }
 
-    /**
-     * Initialise method
-     */
+
     ngOnInit(): void {
         this.getEvents();
     }
 
-    onAddEvent(): void{
+    onAddEvent(): void {
         this.AEventsService.addRandomAEvent()
     }
 
@@ -32,9 +30,6 @@ export class Overview5Component implements OnInit {
         this.events = this.AEventsService.findAll();
     }
 
-    /**
-     * Selects an event
-     */
     selectAEvent(eId: number): void {
         this.router.navigate([eId], {relativeTo: this.activatedRoute})
     }

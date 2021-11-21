@@ -1,53 +1,57 @@
 package com.aeserver.repository;
 
 import com.aeserver.model.AEvent;
+import com.aeserver.model.Registration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * AEvent repository with JPA implementation
+ */
 @Primary
-@Repository
+@Repository("AEVENT.JPA")
 @Transactional
-public class AEventsRepositoryJpa implements AEventsRepository {
+public class AEventsRepositoryJpa extends AbstractEntityRepositoryJpa<AEvent> {
 
-  // connect to the database
-  @PersistenceContext
-  EntityManager entityManager;
-
+  /**
+   * Empty constructor.
+   */
   public AEventsRepositoryJpa() {
-
+    super(AEvent.class);
   }
 
-  @Override
-  public AEvent save(AEvent aEvent) {
-    return entityManager.merge(aEvent);
+  /**
+   * Get value of total number registrations.
+   *
+   * @param id Event to be counted.
+   * @return Size value of registration list.
+   */
+  public int getNumberOfRegistrations(long id) {
+    AEvent aevent = findById(id);
+
+    return aevent.getRegistrations().size();
   }
 
-  @Override
-  public AEvent findById(long id) {
-    return entityManager.find(AEvent.class, id);
+  /**
+   * Add registration to event.
+   *
+   * @param id           Event to be added to.
+   * @param registration Registration to add.
+   * @return Updated event
+   */
+  public AEvent addRegistration(long id, Registration registration) {
+
+    AEvent aevent = findById(id);
+
+    aevent.addRegistration(registration);
+    registration.setAEvent(aevent);
+
+    entityManager.persist(registration);
+
+    return aevent;
   }
 
-  @Override
-  public boolean deleteById(long id) {
-    if (id != 0) {
-      AEvent aevent = findById(id);
-      entityManager.remove(aevent);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  @Override
-  public List<AEvent> findAll() {
-    TypedQuery<AEvent> namedQuery = entityManager.createNamedQuery("find_all_events", AEvent.class);
-    return namedQuery.getResultList();
-  }
+  ;
 }

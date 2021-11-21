@@ -1,19 +1,19 @@
 package com.aeserver.model;
 
-
+import com.aeserver.repository.interfaces.Identifiable;
 import com.aeserver.view.Views;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import org.springframework.context.annotation.Primary;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.fasterxml.jackson.annotation.*;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-@Entity
-@NamedQuery(name="find_all_events", query="select e from AEvent e")
-public class AEvent {
-  enum AEventStatus {
+@Entity()
+@NamedQuery(name = "find_all_events", query = "select e from AEvent e")
+@SequenceGenerator(name = "event_id_seq", initialValue = 20001, allocationSize = 100)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class AEvent implements Identifiable {
+  public static enum AEventStatus {
     DRAFT,
     PUBLISHED,
     CANCELED
@@ -22,44 +22,34 @@ public class AEvent {
   public static long idCounter = 20001;
 
   @JsonView(Views.Summary.class)
-  @JsonProperty("_id")
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_id_seq")
   private long id;
 
   @JsonView(Views.Summary.class)
-  @JsonProperty("_title")
   private String title;
-
-  @JsonProperty("_start")
   private Date start;
-
-  @JsonProperty("_end")
   private Date end;
 
-  @JsonProperty("_description")
   @Column(length = 1000)
   private String description;
 
   @JsonView(Views.Summary.class)
-  @JsonProperty("_status")
   @Enumerated(EnumType.STRING)
   private AEventStatus status;
 
-  @JsonProperty("_isTicketed")
   private boolean isTicketed;
-
-  @JsonProperty("_participationFee")
   private double participationFee;
-
-  @JsonProperty("_maxParticipants")
   private int maxParticipants;
+
+  @JsonManagedReference
+  @OneToMany(mappedBy = "aEvent")
+  private List<Registration> registrations = new ArrayList<>();
 
   public AEvent() {
   }
 
   public AEvent(long id, String title, Date start, Date end, String description, AEventStatus status, boolean isTicketed, double participationFee, int maxParticipants) {
-
     this.id = id;
     this.title = title;
     this.start = start;
@@ -123,8 +113,8 @@ public class AEvent {
     return isTicketed;
   }
 
-  public void setTicketed(boolean ticketed) {
-    isTicketed = ticketed;
+  public void setTicketed(boolean isTicketed) {
+    this.isTicketed = isTicketed;
   }
 
   public double getParticipationFee() {
@@ -141,6 +131,14 @@ public class AEvent {
 
   public void setMaxParticipants(int maxParticipants) {
     this.maxParticipants = maxParticipants;
+  }
+
+  public List<Registration> getRegistrations() {
+    return registrations;
+  }
+
+  public void addRegistration(Registration registration) {
+    this.registrations.add(registration);
   }
 
   public static AEvent createRandomAEvent() {

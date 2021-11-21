@@ -7,7 +7,7 @@ export enum AEventStatus {
 }
 
 export class AEvent {
-    static idCounter: number = 20001;
+    private static _idCounter: number = 20001;
 
     private _id: number;
     private _title: string;
@@ -18,6 +18,7 @@ export class AEvent {
     private _isTicketed: Boolean;
     private _participationFee: number;
     private _maxParticipants: number;
+
 
     constructor(id: number, title: string, start: Date, end: Date, description: string, status: AEventStatus, isTicketed: Boolean, participationFee: number, maxParticipants: number) {
         this._id = id;
@@ -31,13 +32,12 @@ export class AEvent {
         this._maxParticipants = maxParticipants;
     }
 
-
     public static createRandomAEvent(): AEvent {
 
         let eventNames = ['The fantastic event', 'The less fantastic event', 'the flat earth convention'];
         let statusEnum = [AEventStatus.Draft, AEventStatus.Published, AEventStatus.Canceled];
 
-        let id = this.idCounter++;
+        let id = this._idCounter++;
         let title = eventNames[Math.floor(Math.random() * eventNames.length)] + "-" + id;
         let start = new Date();
         let end = new Date();
@@ -51,14 +51,35 @@ export class AEvent {
     }
 
     public trueCopy(): AEvent {
-        return Object.assign(new AEvent(0, "", new Date(), new Date(), "", AEventStatus.Draft, false,0, 0 ), this)
+        return Object.assign(new AEvent(0, "", new Date(), new Date(), "", AEventStatus.Draft, false, 0, 0), this)
     }
 
     static trueCopy(aevent: AEvent): AEvent {
-        return Object.assign(new AEvent(0, "", new Date(), new Date(), "", AEventStatus.Draft, false,0, 0 ), aevent)
+        return Object.assign(new AEvent(0, "", new Date(), new Date(), "", AEventStatus.Draft, false, 0, 0), aevent)
+    }
+
+    public toJSON() {
+        return {
+            description: this.description,
+            end: this.end,
+            id: this.id,
+            isTicketed: this.isTicketed,
+            maxParticipants: this.maxParticipants,
+            participationFee: this.participationFee,
+            start: this.start,
+            status: this.status,
+            title: this.title
+        }
     }
 
 
+    get id(): number {
+        return this._id;
+    }
+
+    set id(value: number) {
+        this._id = value;
+    }
 
     get title(): string {
         return this._title;
@@ -122,14 +143,5 @@ export class AEvent {
 
     set maxParticipants(value: number) {
         this._maxParticipants = value;
-    }
-
-
-    get id(): number {
-        return this._id;
-    }
-
-    set id(value: number) {
-        this._id = value;
     }
 }
