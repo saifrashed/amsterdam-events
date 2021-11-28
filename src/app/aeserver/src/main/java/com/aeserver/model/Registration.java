@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@NamedQuery(name = "find_all_registrations", query = "select r from Registration r")
 @SequenceGenerator(name = "registration_id_seq", initialValue = 100000, allocationSize = 100)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Registration implements Identifiable {

@@ -75,4 +75,9 @@ public abstract class AbstractEntityRepositoryMock<E extends Identifiable> imple
   public List<E> findAll() {
     return entities;
   }
+
+  @Override
+  public List<E> findByQuery(String jpqlName, Object... params) {
+    return null;
+  }
 }

@@ -8,12 +8,18 @@ import com.aeserver.repository.AEventsRepositoryJpa;
 import com.aeserver.repository.AEventsRepositoryMock;
 import com.aeserver.view.Views;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import org.yaml.snakeyaml.util.EnumUtils;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * AEvent Controller
@@ -29,12 +35,42 @@ public class AEventsController {
   @Autowired
   AEventsRepositoryJpa eventRepo;
 
+  private Logger logger = LoggerFactory.getLogger(this.getClass());
+
   /**
    * @return List of events.
    */
   @GetMapping("/aevent")
-  public ResponseEntity<List<AEvent>> getEvents() {
-    List<AEvent> events = eventRepo.findAll();
+  public ResponseEntity<List<AEvent>> getEvents(@RequestParam Optional<String> title, @RequestParam Optional<String> status, @RequestParam Optional<Integer> minRegistrations) {
+
+    List<String> statusList = EnumSet.allOf(AEvent.AEventStatus.class).stream().map(e -> e.name()).collect(Collectors.toList()); // list of enum as string
+    List<AEvent> events = eventRepo.findAll(); // list for events
+
+    int amountParams = 0;
+
+    if (title.isPresent()) {
+      events = eventRepo.findByQuery("AEvent_find_by_title", title.get());
+      amountParams++;
+    }
+
+    if (status.isPresent()) {
+      // status check
+      if (status.isPresent() && !statusList.contains(status.get()))
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "status=" + status.get() + " is not a valid AEvent status value");
+
+      events = eventRepo.findByQuery("AEvent_find_by_status", AEvent.AEventStatus.valueOf(status.get()));
+      amountParams++;
+    }
+
+    if (minRegistrations.isPresent()) {
+      events = eventRepo.findByQuery("AEvent_find_by_minRegistrations", minRegistrations.get());
+      amountParams++;
+    }
+
+    // check amount params
+    if (amountParams > 1)
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can only handle one request paramater title=, status= or minRegistration=");
+
     return new ResponseEntity<>(events, HttpStatus.OK);
   }
 

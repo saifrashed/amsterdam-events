@@ -10,4 +10,6 @@ public interface EntityRepository<E extends Identifiable> {
   E save(E entity);
 
   boolean deleteById(long id);
+
+  List<E> findByQuery(String jpqlName, Object... params);
 }

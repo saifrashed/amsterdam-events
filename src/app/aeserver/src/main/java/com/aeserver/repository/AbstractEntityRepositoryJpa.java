@@ -5,10 +5,12 @@ import com.aeserver.repository.interfaces.Identifiable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -58,5 +60,19 @@ public abstract class AbstractEntityRepositoryJpa<E extends Identifiable> implem
     Root<E> root = cq.from(this.theEntityClass);
     cq.select(root);
     return this.entityManager.createQuery(cq).getResultList();
+  }
+
+  @Override
+  public List<E> findByQuery(String jpqlName, Object... params) {
+
+    Query query = entityManager.createNamedQuery(jpqlName);
+
+    int positional = 1;
+
+    for (Object param : params) {
+      query.setParameter(positional++, param);
+    }
+
+    return query.getResultList();
   }
 }

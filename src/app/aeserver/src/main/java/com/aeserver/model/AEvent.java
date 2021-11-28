@@ -8,8 +8,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+
 @Entity()
-@NamedQuery(name = "find_all_events", query = "select e from AEvent e")
+@NamedQuery(name = "AEvent_find_by_status", query = "select e from AEvent e where e.status = ?1 ")
+@NamedQuery(name = "AEvent_find_by_title", query = "select e from AEvent e where LOCATE(e.title, ?1 ) > 0")
+@NamedQuery(name = "AEvent_find_by_minRegistrations", query = "select e from AEvent e where e.registrations.size >= ?1 ")
 @SequenceGenerator(name = "event_id_seq", initialValue = 20001, allocationSize = 100)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class AEvent implements Identifiable {
