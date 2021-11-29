@@ -41,6 +41,7 @@ public class AEventsController {
    * @return List of events.
    */
   @GetMapping("/aevent")
+  @JsonView(value = Views.Summary.class)
   public ResponseEntity<List<AEvent>> getEvents(@RequestParam Optional<String> title, @RequestParam Optional<String> status, @RequestParam Optional<Integer> minRegistrations) {
 
     List<String> statusList = EnumSet.allOf(AEvent.AEventStatus.class).stream().map(e -> e.name()).collect(Collectors.toList()); // list of enum as string
@@ -78,7 +79,7 @@ public class AEventsController {
    * @return List of summary view.
    */
   @GetMapping("/aevent/summary")
-  @JsonView(Views.Summary.class)
+  @JsonView({Views.Summary.class})
   public ResponseEntity<List<AEvent>> getEventSummary() {
 
 
@@ -91,6 +92,7 @@ public class AEventsController {
    * @return Httpstatus & found event object.
    */
   @GetMapping("/aevent/{id}")
+  @JsonView({Views.Unrestricted.class})
   public ResponseEntity<AEvent> getEventById(@PathVariable Long id) {
     AEvent events = eventRepo.findById(id);
     return new ResponseEntity<>(events, HttpStatus.OK);
@@ -111,7 +113,7 @@ public class AEventsController {
    * @param aeventId     Event id to be updated.
    * @return Httpstatus & updated event object.
    */
-  @PostMapping("/aevents/{aeventId}/register")
+  @PostMapping("/aevent/{aeventId}/register")
   public ResponseEntity<AEvent> addEventRegistration(@RequestBody Registration registration, @PathVariable long aeventId) {
 
     AEvent aevent = eventRepo.findById(aeventId);
@@ -125,6 +127,35 @@ public class AEventsController {
     AEvent events = eventRepo.addRegistration(aeventId, registration);
 
     return new ResponseEntity<>(events, HttpStatus.OK);
+  }
+
+
+  /**
+   * Get registrations for given event
+   * @param aeventId
+   * @return
+   */
+  @GetMapping("/aevent/{aeventId}/registrations")
+  @JsonView({Views.Summary.class})
+  public ResponseEntity<List<Registration>> getEventRegistrations(@PathVariable long aeventId) {
+
+    List<Registration> registrations = eventRepo.getRegistrations(aeventId);
+
+    return new ResponseEntity<>(registrations, HttpStatus.OK);
+  }
+
+  /**
+   * Get registration for given event
+   * @param aeventId
+   * @return
+   */
+  @GetMapping("/aevent/{aeventId}/registrations/{registrationId}")
+  @JsonView({Views.Unrestricted.class})
+  public ResponseEntity<Registration> getEventRegistration(@PathVariable long aeventId, @PathVariable long registrationId) {
+
+    Registration registration = eventRepo.getRegistration(aeventId, registrationId);
+
+    return new ResponseEntity<>(registration, HttpStatus.OK);
   }
 
   /**

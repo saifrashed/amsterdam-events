@@ -1,26 +1,35 @@
 package com.aeserver.model;
 
 import com.aeserver.repository.interfaces.Identifiable;
+import com.aeserver.view.Views;
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity()
 @SequenceGenerator(name = "registration_id_seq", initialValue = 100000, allocationSize = 100)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Registration implements Identifiable {
 
   @Id
+  @JsonView(Views.Shallow.class)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "registration_id_seq")
   private long id;
 
+  @JsonView(Views.Unrestricted.class)
   private String ticketCode;
+
+  @JsonView(Views.Unrestricted.class)
   private boolean paid;
+
+  @JsonView(Views.Shallow.class)
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime submissionDate;
 
-  @JsonBackReference
   @ManyToOne
+  @JsonView({Views.Summary.class})
+  @JsonSerialize(using = Views.ShallowSerializer.class)
   private AEvent aEvent;
 
   public Registration() {

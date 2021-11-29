@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * AEvent repository with JPA implementation
@@ -53,5 +54,23 @@ public class AEventsRepositoryJpa extends AbstractEntityRepositoryJpa<AEvent> {
     return aevent;
   }
 
-  ;
+  public List<Registration> getRegistrations(long id) {
+
+    AEvent aevent = findById(id);
+    return aevent.getRegistrations();
+  }
+
+  public Registration getRegistration(long id, long registrationId) {
+
+    AEvent aevent = findById(id);
+    List<Registration> registrations = aevent.getRegistrations();
+
+    for (int i = 0; i < registrations.size(); i++) {
+      if (registrations.get(i).getId() == registrationId) {
+        return registrations.get(i);
+      }
+    }
+
+    return null;
+  }
 }

@@ -3,6 +3,8 @@ package com.aeserver.model;
 import com.aeserver.repository.interfaces.Identifiable;
 import com.aeserver.view.Views;
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,7 +17,6 @@ import java.util.List;
 @NamedQuery(name = "AEvent_find_by_title", query = "select e from AEvent e where LOCATE(e.title, ?1 ) > 0")
 @NamedQuery(name = "AEvent_find_by_minRegistrations", query = "select e from AEvent e where e.registrations.size >= ?1 ")
 @SequenceGenerator(name = "event_id_seq", initialValue = 20001, allocationSize = 100)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class AEvent implements Identifiable {
   public static enum AEventStatus {
     DRAFT,
@@ -25,29 +26,42 @@ public class AEvent implements Identifiable {
 
   public static long idCounter = 20001;
 
-  @JsonView(Views.Summary.class)
   @Id
+  @JsonView(Views.Shallow.class)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_id_seq")
   private long id;
 
-  @JsonView(Views.Summary.class)
+  @JsonView(Views.Shallow.class)
   private String title;
+
+  @JsonView(Views.Summary.class)
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private Date start;
+
+  @JsonView(Views.Unrestricted.class)
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private Date end;
 
+  @JsonView(Views.Unrestricted.class)
   @Column(length = 1000)
   private String description;
 
-  @JsonView(Views.Summary.class)
+  @JsonView(Views.Shallow.class)
   @Enumerated(EnumType.STRING)
   private AEventStatus status;
 
+  @JsonView(Views.Summary.class)
   private boolean isTicketed;
+
+  @JsonView(Views.Summary.class)
   private double participationFee;
+
+  @JsonView(Views.Unrestricted.class)
   private int maxParticipants;
 
-  @JsonManagedReference
   @OneToMany(mappedBy = "aEvent")
+  @JsonView({Views.Summary.class})
+  @JsonSerialize(using = Views.ShallowSerializer.class)
   private List<Registration> registrations = new ArrayList<>();
 
   public AEvent() {
