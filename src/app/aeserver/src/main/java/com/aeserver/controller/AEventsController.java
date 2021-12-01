@@ -132,6 +132,7 @@ public class AEventsController {
 
   /**
    * Get registrations for given event
+   *
    * @param aeventId
    * @return
    */
@@ -146,6 +147,7 @@ public class AEventsController {
 
   /**
    * Get registration for given event
+   *
    * @param aeventId
    * @return
    */

@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 
 
-
 @Entity()
 @NamedQuery(name = "AEvent_find_by_status", query = "select e from AEvent e where e.status = ?1 ")
 @NamedQuery(name = "AEvent_find_by_title", query = "select e from AEvent e where LOCATE(e.title, ?1 ) > 0")

@@ -9,11 +9,14 @@ import java.io.IOException;
 
 public class Views {
 
-  public static class Shallow { }
+  public static class Shallow {
+  }
 
-  public static class Summary extends Shallow { }
+  public static class Summary extends Shallow {
+  }
 
-  public static class Unrestricted extends Summary { }
+  public static class Unrestricted extends Summary {
+  }
 
   public static class ShallowSerializer extends JsonSerializer<Object> {
     @Override
