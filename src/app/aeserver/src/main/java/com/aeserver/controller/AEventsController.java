@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 /**
  * AEvent Controller
  */
-@CrossOrigin(origins = "*") //this line
 @RestController
 @RequestMapping("/api")
 public class AEventsController {

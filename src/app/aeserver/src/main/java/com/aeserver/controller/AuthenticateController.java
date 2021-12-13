@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 /**
  * Authenticate Controller
  */
-@CrossOrigin(origins = "*") //this line
 @RestController
 @RequestMapping("/api/authenticate")
 public class AuthenticateController {

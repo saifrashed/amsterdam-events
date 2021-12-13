@@ -12,12 +12,14 @@ import {Overview4qpComponent} from './components/mainpage/events/overview4qp/ove
 
 import {Overview5Component} from './components/mainpage/events/overview5/overview5.component';
 import {Detail5Component} from './components/mainpage/events/detail5/detail5.component';
+import {SignOnComponent} from './components/mainpage/sign-on/sign-on.component';
 
 import {NotFoundComponent} from './components/mainpage/not-found/not-found.component';
 import {CanDeactivateGuard} from "./services/can-deactivate-guard.service";
 
 const routes: Routes = [
     {path: '', component: HomeComponent},
+    {path: 'login', component: SignOnComponent},
     {path: 'overview-one', component: Overview1Component},
     {path: 'overview-two', component: Overview2Component},
     {path: 'overview-three', component: Overview3Component},
