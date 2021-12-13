@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module'; // CLI imports AppRoutingModule
@@ -29,6 +29,7 @@ import {SignOnComponent} from './components/mainpage/sign-on/sign-on.component';
 
 
 import {NotFoundComponent} from './components/mainpage/not-found/not-found.component';
+import {AuthSbInterceptor} from "./services/auth-sb-interceptor";
 
 
 @NgModule({
@@ -61,7 +62,13 @@ import {NotFoundComponent} from './components/mainpage/not-found/not-found.compo
         ReactiveFormsModule,
         AppRoutingModule
     ],
-    providers: [],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthSbInterceptor,
+            multi: true
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
