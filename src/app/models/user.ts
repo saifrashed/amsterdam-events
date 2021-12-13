@@ -1,11 +1,5 @@
 export class User {
 
-    private _id: number;
-    private _name: string;
-    private _eMail: Date;
-    private _hashedPassWord: Date;
-    private _admin: boolean;
-
     constructor(id: number, name: string, eMail: Date, hashedPassWord: Date, admin: boolean) {
         this._id = id;
         this._name = name;
@@ -14,6 +8,7 @@ export class User {
         this._admin = admin;
     }
 
+    private _id: number;
 
     get id(): number {
         return this._id;
@@ -23,6 +18,8 @@ export class User {
         this._id = value;
     }
 
+    private _name: string;
+
     get name(): string {
         return this._name;
     }
@@ -30,6 +27,8 @@ export class User {
     set name(value: string) {
         this._name = value;
     }
+
+    private _eMail: Date;
 
     get eMail(): Date {
         return this._eMail;
@@ -39,6 +38,8 @@ export class User {
         this._eMail = value;
     }
 
+    private _hashedPassWord: Date;
+
     get hashedPassWord(): Date {
         return this._hashedPassWord;
     }
@@ -46,6 +47,8 @@ export class User {
     set hashedPassWord(value: Date) {
         this._hashedPassWord = value;
     }
+
+    private _admin: boolean;
 
     get admin(): boolean {
         return this._admin;

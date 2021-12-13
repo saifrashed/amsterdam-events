@@ -9,17 +9,6 @@ export enum AEventStatus {
 export class AEvent {
     private static _idCounter: number = 20001;
 
-    private _id: number;
-    private _title: string;
-    private _start: Date;
-    private _end: Date;
-    private _description: string;
-    private _status: AEventStatus;
-    private _isTicketed: Boolean;
-    private _participationFee: number;
-    private _maxParticipants: number;
-
-
     constructor(id: number, title: string, start: Date, end: Date, description: string, status: AEventStatus, isTicketed: Boolean, participationFee: number, maxParticipants: number) {
         this._id = id;
         this._title = title;
@@ -30,6 +19,96 @@ export class AEvent {
         this._isTicketed = isTicketed;
         this._participationFee = participationFee;
         this._maxParticipants = maxParticipants;
+    }
+
+    private _id: number;
+
+    get id(): number {
+        return this._id;
+    }
+
+    set id(value: number) {
+        this._id = value;
+    }
+
+    private _title: string;
+
+    get title(): string {
+        return this._title;
+    }
+
+    set title(value: string) {
+        this._title = value;
+    }
+
+    private _start: Date;
+
+    get start(): Date {
+        return this._start;
+    }
+
+    set start(value: Date) {
+        this._start = value;
+    }
+
+    private _end: Date;
+
+    get end(): Date {
+        return this._end;
+    }
+
+    set end(value: Date) {
+        this._end = value;
+    }
+
+    private _description: string;
+
+    get description(): string {
+        return this._description;
+    }
+
+    set description(value: string) {
+        this._description = value;
+    }
+
+    private _status: AEventStatus;
+
+    get status(): AEventStatus {
+        return this._status;
+    }
+
+    set status(value: AEventStatus) {
+        this._status = value;
+    }
+
+    private _isTicketed: Boolean;
+
+    get isTicketed(): Boolean {
+        return this._isTicketed;
+    }
+
+    set isTicketed(value: Boolean) {
+        this._isTicketed = value;
+    }
+
+    private _participationFee: number;
+
+    get participationFee(): number {
+        return this._participationFee;
+    }
+
+    set participationFee(value: number) {
+        this._participationFee = value;
+    }
+
+    private _maxParticipants: number;
+
+    get maxParticipants(): number {
+        return this._maxParticipants;
+    }
+
+    set maxParticipants(value: number) {
+        this._maxParticipants = value;
     }
 
     public static createRandomAEvent(): AEvent {
@@ -50,12 +129,12 @@ export class AEvent {
         return new AEvent(id, title, start, end, description, status, isTicketed, participationFee, maxParticipants);
     }
 
-    public trueCopy(): AEvent {
-        return Object.assign(new AEvent(0, "", new Date(), new Date(), "", AEventStatus.Draft, false, 0, 0), this)
-    }
-
     static trueCopy(aevent: AEvent): AEvent {
         return Object.assign(new AEvent(0, "", new Date(), new Date(), "", AEventStatus.Draft, false, 0, 0), aevent)
+    }
+
+    public trueCopy(): AEvent {
+        return Object.assign(new AEvent(0, "", new Date(), new Date(), "", AEventStatus.Draft, false, 0, 0), this)
     }
 
     public toJSON() {
@@ -70,78 +149,5 @@ export class AEvent {
             status: this.status,
             title: this.title
         }
-    }
-
-
-    get id(): number {
-        return this._id;
-    }
-
-    set id(value: number) {
-        this._id = value;
-    }
-
-    get title(): string {
-        return this._title;
-    }
-
-    set title(value: string) {
-        this._title = value;
-    }
-
-    get start(): Date {
-        return this._start;
-    }
-
-    set start(value: Date) {
-        this._start = value;
-    }
-
-    get end(): Date {
-        return this._end;
-    }
-
-    set end(value: Date) {
-        this._end = value;
-    }
-
-    get description(): string {
-        return this._description;
-    }
-
-    set description(value: string) {
-        this._description = value;
-    }
-
-    get status(): AEventStatus {
-        return this._status;
-    }
-
-    set status(value: AEventStatus) {
-        this._status = value;
-    }
-
-    get isTicketed(): Boolean {
-        return this._isTicketed;
-    }
-
-    set isTicketed(value: Boolean) {
-        this._isTicketed = value;
-    }
-
-    get participationFee(): number {
-        return this._participationFee;
-    }
-
-    set participationFee(value: number) {
-        this._participationFee = value;
-    }
-
-    get maxParticipants(): number {
-        return this._maxParticipants;
-    }
-
-    set maxParticipants(value: number) {
-        this._maxParticipants = value;
     }
 }

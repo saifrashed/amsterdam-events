@@ -1,6 +1,7 @@
 <header class="blog-header py-0 my-0">
     <div class="row flex-nowrap justify-content-between m-0 ">
-        <div class="col-3 p-0 d-none d-md-block" style="background: url('assets/img/header-left.jpg'); background-size: cover; background-position:left">
+        <div class="col-3 p-0 d-none d-md-block"
+             style="background: url('assets/img/header-left.jpg'); background-size: cover; background-position:left">
         </div>
 
         <div class="col-xs-12 col-md-6 py-3 text-center">
@@ -9,7 +10,8 @@
             <div class="row flex-nowrap justify-content-between m-0">
                 <div class="col-12 p-0">
                     <div class="px-4">
-                        <span class="float-start subtitle d-none d-md-block">Today is <br> {{currentDate.toLocaleDateString("en-EN", { weekday: 'long' })}}, {{currentDate.getDate()}} {{currentDate.toLocaleDateString("en-EN", { month: 'long' })}} {{currentDate.getFullYear()}}</span>
+                        <span class="float-start subtitle d-none d-md-block">Today is <br> {{currentDate.toLocaleDateString("en-EN", {weekday: 'long'})}}
+                                                                             , {{currentDate.getDate()}} {{currentDate.toLocaleDateString("en-EN", {month: 'long'})}} {{currentDate.getFullYear()}}</span>
                     </div>
 
                     <div class="px-4">
@@ -18,7 +20,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-3 p-0 d-none d-md-block" style="background: url('assets/img/header-right.jpg'); background-size: cover">
+        <div class="col-3 p-0 d-none d-md-block"
+             style="background: url('assets/img/header-right.jpg'); background-size: cover">
             <!--<img class="img-fluid" src="assets/img/header-right.jpg"/>-->
         </div>
     </div>

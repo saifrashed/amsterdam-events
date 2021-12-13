@@ -28,7 +28,7 @@ export class SessionSbService {
 
             this.saveTokenIntoSessionStorage(response.headers.get("Authorization"), (response.body as unknown as User).name)
         }, error => {
-            console.log(error)
+            console.log(error);
             this.saveTokenIntoSessionStorage(null, null)
         });
 

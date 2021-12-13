@@ -24,7 +24,7 @@ export class Overview4Component implements OnInit {
         this.getEvents();
     }
 
-    onAddEvent(): void{
+    onAddEvent(): void {
         this.AEventsService.addRandomAEvent()
     }
 
