@@ -11,9 +11,15 @@ export class SessionSbService {
 
     public readonly BACKEND_AUTH_URL = "http://localhost:8084/api/authenticate";
 
-    public currentUserName: string | any = sessionStorage.getItem("userName") || "Visitor";
+    public currentUserName: string | any;
 
     constructor(private http: HttpClient) {
+
+        if(this.isAuthenticated()) {
+            this.currentUserName = sessionStorage.getItem("userName")
+        } else {
+            this.currentUserName = "Visitor"
+        }
 
     }
 
