@@ -12,6 +12,7 @@ import java.util.List;
 
 
 @Entity()
+@Inheritance(strategy = InheritanceType.JOINED)
 @NamedQuery(name = "AEvent_find_by_status", query = "select e from AEvent e where e.status = ?1 ")
 @NamedQuery(name = "AEvent_find_by_title", query = "select e from AEvent e where LOCATE(e.title, ?1 ) > 0")
 @NamedQuery(name = "AEvent_find_by_minRegistrations", query = "select e from AEvent e where e.registrations.size >= ?1 ")

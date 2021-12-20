@@ -3,22 +3,25 @@ package com.aeserver.controller;
 import com.aeserver.exception.PreConditionalFailedException;
 import com.aeserver.exception.ResourceNotFoundException;
 import com.aeserver.model.AEvent;
+import com.aeserver.model.ExternalEvent;
 import com.aeserver.model.Registration;
+import com.aeserver.model.User;
 import com.aeserver.repository.AEventsRepositoryJpa;
-import com.aeserver.repository.AEventsRepositoryMock;
+import com.aeserver.repository.ExternalEventRepositoryJpa;
+import com.aeserver.repository.UserRepositoryJpa;
 import com.aeserver.view.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.yaml.snakeyaml.util.EnumUtils;
 
-import java.util.*;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -33,6 +36,18 @@ public class AEventsController {
    */
   @Autowired
   AEventsRepositoryJpa eventRepo;
+
+  /**
+   * JPA repository
+   */
+  @Autowired
+  ExternalEventRepositoryJpa externalEventRepo;
+
+  /**
+   * User repository
+   */
+  @Autowired
+  UserRepositoryJpa userRepo;
 
   private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -189,5 +204,30 @@ public class AEventsController {
 
     return new ResponseEntity<>(deletionStatus, HttpStatus.OK);
   }
+
+
+  @PostMapping("/users/{userId}/external-events")
+  public ResponseEntity<User> saveEvents(@PathVariable Long userId, @RequestBody ExternalEvent event) {
+
+    User user = userRepo.addExternalEvent(userId, event);
+
+    return new ResponseEntity<>(user, HttpStatus.OK);
+  }
+
+
+  @PutMapping("/external-events/{id}")
+  @ResponseBody
+  public ResponseEntity<AEvent> updateExternalEvent(@PathVariable Long id, @RequestBody ExternalEvent event) {
+
+    if (event.getId() != id)
+      throw new PreConditionalFailedException("AEvent-Id=" + event.getId() + " does not match path parameter=" + id);
+
+    ExternalEvent eventUpdate = externalEventRepo.findById(id);
+    event.setUser(eventUpdate.getUser());
+    ExternalEvent eventObj = externalEventRepo.save(event);
+
+    return new ResponseEntity<>(eventObj, HttpStatus.OK);
+  }
+
 
 }

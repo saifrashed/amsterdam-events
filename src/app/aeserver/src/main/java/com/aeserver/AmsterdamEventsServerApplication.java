@@ -2,8 +2,10 @@ package com.aeserver;
 
 import com.aeserver.model.AEvent;
 import com.aeserver.model.Registration;
+import com.aeserver.model.User;
 import com.aeserver.repository.AEventsRepositoryJpa;
 import com.aeserver.repository.RegistrationRepositoryJpa;
+import com.aeserver.repository.UserRepositoryJpa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class AmsterdamEventsServerApplication implements CommandLineRunner {
 
   @Autowired
   AEventsRepositoryJpa aeventRepo;
+
+  @Autowired
+  UserRepositoryJpa userRepo;
 
   @Autowired
   RegistrationRepositoryJpa registrationRepo;
@@ -60,6 +65,16 @@ public class AmsterdamEventsServerApplication implements CommandLineRunner {
     registrationRepo.save(registration5);
     registrationRepo.save(registration6);
 
+
+    User user1 = new User("userOne", "userOne@icloud.com", "userOne", true);
+    User user2 = new User("userTwo", "userTwo@icloud.com", "userTwo", false);
+    User user3 = new User("userThree", "userThree@icloud.com", "userThree", false);
+    User user4 = new User("userFour", "userFour@icloud.com", "userFour", true);
+
+    userRepo.save(user1);
+    userRepo.save(user2);
+    userRepo.save(user3);
+    userRepo.save(user4);
   }
 
 }
